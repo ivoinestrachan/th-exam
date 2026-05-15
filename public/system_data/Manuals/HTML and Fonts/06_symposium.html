@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #2a1f1a; background: #f4ece0; width: 210mm; height: 297mm; padding: 20mm 18mm; position: relative; overflow: hidden; }
+.crest { width: 14mm; height: 14mm; border: 1.5px solid #7a3a2c; border-radius: 50%; position: relative; margin: 0 auto 4mm; }
+.crest::before, .crest::after { content: ''; position: absolute; background: #7a3a2c; }
+.crest::before { width: 1px; height: 100%; left: 50%; transform: translateX(-50%); }
+.crest::after { width: 100%; height: 1px; top: 50%; transform: translateY(-50%); }
+.eyebrow { text-align: center; font-size: 8pt; letter-spacing: 5pt; color: #7a3a2c; text-transform: uppercase; font-family: 'Helvetica Neue', sans-serif; margin-bottom: 3mm; }
+h1 { text-align: center; font-size: 42pt; font-weight: 400; line-height: 1; color: #2a1f1a; }
+h1 em { font-style: italic; color: #7a3a2c; }
+.tagline { text-align: center; font-style: italic; color: #7a3a2c; font-size: 11pt; margin-top: 3mm; }
+.divider { text-align: center; color: #b89878; margin: 6mm 0; letter-spacing: 4pt; }
+.divider::before, .divider::after { content: '— · —'; }
+.divider span { padding: 0 4mm; font-size: 8pt; letter-spacing: 4pt; color: #7a3a2c; text-transform: uppercase; font-family: 'Helvetica Neue', sans-serif; }
+/* Floor plan with three stations */
+.studio { background: #fff; border: 1px solid #b89878; padding: 6mm; margin-bottom: 6mm; }
+.studio-label { text-align: center; font-size: 7.5pt; letter-spacing: 3pt; color: #b89878; margin-bottom: 5mm; font-family: 'Helvetica Neue', sans-serif; }
+.stations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+.station { text-align: center; }
+.station-roman { font-style: italic; color: #7a3a2c; font-size: 14pt; line-height: 1; }
+.station-name { font-size: 13pt; margin: 2mm 0 1mm; color: #2a1f1a; }
+.station-purpose { font-size: 8pt; color: #6a5040; font-style: italic; padding-bottom: 4mm; border-bottom: 1px solid #d8c4a8; margin-bottom: 4mm; min-height: 8mm; font-family: 'Helvetica Neue', sans-serif; }
+.station-icon { font-size: 28pt; color: #7a3a2c; line-height: 1; margin: 3mm 0; font-family: Georgia, serif; }
+.station-rules { text-align: left; font-family: 'Helvetica Neue', sans-serif; font-size: 8pt; line-height: 1.5; }
+.rules-leave { color: #2a1f1a; padding-bottom: 3mm; margin-bottom: 3mm; border-bottom: 1px dotted #d8c4a8; }
+.rules-leave strong, .rules-dont strong { display: block; font-size: 7pt; letter-spacing: 2pt; color: #7a3a2c; margin-bottom: 1.5mm; }
+.rules-dont { color: #6a5040; }
+.rules-dont strong { color: #a85a3a; }
+.station-rules p { margin-bottom: 1mm; padding-left: 3mm; position: relative; }
+.rules-leave p::before { content: '·'; position: absolute; left: 0; color: #7a3a2c; }
+.rules-dont p::before { content: '×'; position: absolute; left: 0; color: #a85a3a; font-size: 9pt; }
+/* Closing line */
+.closing { text-align: center; padding: 5mm; background: #2a1f1a; color: #f4ece0; }
+.closing-title { font-family: 'Helvetica Neue', sans-serif; font-size: 7.5pt; letter-spacing: 4pt; color: #b89878; margin-bottom: 3mm; }
+.closing-text { font-style: italic; font-size: 12pt; line-height: 1.4; }
+.closing-text em { color: #b89878; font-style: normal; }
+.footer { position: absolute; bottom: 12mm; left: 18mm; right: 18mm; text-align: center; font-family: 'Helvetica Neue', sans-serif; font-size: 7.5pt; letter-spacing: 4pt; color: #b89878; }
+</style></head>
+<body>
+  <div class="crest"></div>
+  <div class="eyebrow">Telos House — Space of Creation</div>
+  <h1>The <em>Symposium</em></h1>
+  <div class="tagline">Three stations · Three crafts · One studio</div>
+
+  <div class="divider"><span>The Studio</span></div>
+
+  <div class="studio">
+    <div class="studio-label">— FLOOR PLAN —</div>
+    <div class="stations">
+      <div class="station">
+        <div class="station-roman">I</div>
+        <div class="station-name">Designer's Cabinet</div>
+        <div class="station-purpose">Storage for tools — paint left, sewing right</div>
+        <div class="station-icon">⌂</div>
+        <div class="station-rules">
+          <div class="rules-leave"><strong>LEAVE IT</strong>
+            <p>Cap the paints</p>
+            <p>Sheath the needles</p>
+            <p>Close both doors</p>
+          </div>
+          <div class="rules-dont"><strong>NEVER</strong>
+            <p>Mix the panels</p>
+            <p>Store unfinished work</p>
+            <p>Leave tools out</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-roman">II</div>
+        <div class="station-name">Central Table</div>
+        <div class="station-purpose">Pattern drafting · measuring · fabric cutting</div>
+        <div class="station-icon">▭</div>
+        <div class="station-rules">
+          <div class="rules-leave"><strong>LEAVE IT</strong>
+            <p>Wipe the surface</p>
+            <p>Sweep clippings to bin</p>
+            <p>Leave it bare</p>
+          </div>
+          <div class="rules-dont"><strong>NEVER</strong>
+            <p>Paint on the table</p>
+            <p>Cut without a mat</p>
+            <p>Leave pins or blades</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-roman">III</div>
+        <div class="station-name">Sewing Station</div>
+        <div class="station-purpose">Machine sewing · finishing · construction</div>
+        <div class="station-icon">⚙</div>
+        <div class="station-rules">
+          <div class="rules-leave"><strong>LEAVE IT</strong>
+            <p>Switch off at the wall</p>
+            <p>Clear the bobbin lint</p>
+            <p>Push the chair in</p>
+          </div>
+          <div class="rules-dont"><strong>NEVER</strong>
+            <p>Leave it threaded</p>
+            <p>Force the fabric</p>
+            <p>Service it yourself</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <div class="closing-title">— THE STUDIO IS READY WHEN —</div>
+    <div class="closing-text">Cabinet <em>closed.</em>  ·  Table <em>bare.</em>  ·  Machine <em>off.</em></div>
+  </div>
+
+  <div class="footer">LEAVE EACH STATION AS YOU FOUND IT</div>
+</body></html>

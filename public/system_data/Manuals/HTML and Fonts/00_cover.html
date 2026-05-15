@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #1a2030; background: #f6f1e6; width: 210mm; height: 297mm; padding: 22mm 20mm; position: relative; overflow: hidden; }
+body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 12mm; background: #1a2030; }
+body::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 12mm; background: #1a2030; }
+.crest { width: 14mm; height: 14mm; border: 1.5px solid #1a2030; border-radius: 50%; position: relative; margin: 0 auto 6mm; }
+.crest::before, .crest::after { content: ''; position: absolute; background: #1a2030; }
+.crest::before { width: 1px; height: 100%; left: 50%; transform: translateX(-50%); }
+.crest::after { width: 100%; height: 1px; top: 50%; transform: translateY(-50%); }
+.eyebrow { text-align: center; font-family: 'Helvetica Neue', sans-serif; font-size: 9pt; letter-spacing: 6pt; color: #1a2030; text-transform: uppercase; margin-bottom: 4mm; }
+h1 { text-align: center; font-size: 52pt; font-weight: 300; line-height: 1; color: #1a2030; letter-spacing: -1pt; margin-bottom: 3mm; }
+h1 em { font-style: italic; }
+.subtitle { text-align: center; font-style: italic; font-size: 14pt; color: #6a5a3a; margin-bottom: 6mm; }
+.divider { text-align: center; color: #c0a878; margin: 5mm 0; letter-spacing: 4pt; font-size: 8pt; }
+/* Index */
+.index-title { text-align: center; font-family: 'Helvetica Neue', sans-serif; font-size: 9pt; letter-spacing: 5pt; color: #6a5a3a; text-transform: uppercase; margin-bottom: 4mm; }
+.index { max-width: 130mm; margin: 0 auto; }
+.index-row { display: flex; align-items: baseline; padding: 1.8mm 0; border-bottom: 1px dotted #c0a878; }
+.index-num { font-style: italic; color: #6a5a3a; width: 12mm; font-size: 10.5pt; }
+.index-name { flex: 1; font-size: 10.5pt; color: #1a2030; }
+.index-name em { color: #6a5a3a; font-style: italic; }
+.index-pages { font-family: 'Helvetica Neue', sans-serif; font-size: 8pt; color: #6a5a3a; letter-spacing: 1pt; }
+.colophon { position: absolute; bottom: 14mm; left: 20mm; right: 20mm; text-align: center; font-family: 'Helvetica Neue', sans-serif; font-size: 8pt; letter-spacing: 3pt; color: #6a5a3a; text-transform: uppercase; }
+</style></head>
+<body>
+  <div class="crest"></div>
+  <div class="eyebrow">Telos House</div>
+  <h1>The <em>Natural Order</em></h1>
+  <div class="subtitle">A Compendium of House Manuals</div>
+
+  <div class="divider">— · — · —</div>
+
+  <div class="index-title">— Contents —</div>
+  <div class="index">
+    <div class="index-row"><span class="index-num">I.</span><span class="index-name">The <em>Bathroom</em></span><span class="index-pages">SPACE OF CARE</span></div>
+    <div class="index-row"><span class="index-num">II.</span><span class="index-name">The <em>Kitchen</em></span><span class="index-pages">SPACE OF NOURISHMENT</span></div>
+    <div class="index-row"><span class="index-num">III.</span><span class="index-name">Towels, <em>Medicine</em> &amp; Bags</span><span class="index-pages">CUPBOARD</span></div>
+    <div class="index-row"><span class="index-num">IV.</span><span class="index-name">Electronics &amp; <em>Stationery</em></span><span class="index-pages">CUPBOARD</span></div>
+    <div class="index-row"><span class="index-num">V.</span><span class="index-name">Seasonal Clothing &amp; <em>Sewing</em></span><span class="index-pages">CUPBOARD</span></div>
+    <div class="index-row"><span class="index-num">VI.</span><span class="index-name">Storage — Bags &amp; <em>Tools</em></span><span class="index-pages">CUPBOARD</span></div>
+    <div class="index-row"><span class="index-num">VII.</span><span class="index-name">The <em>Wardrobe</em></span><span class="index-pages">SPACE OF GARMENTS</span></div>
+    <div class="index-row"><span class="index-num">VIII.</span><span class="index-name">The <em>Forge</em></span><span class="index-pages">SPACE OF IMAGINATION</span></div>
+    <div class="index-row"><span class="index-num">IX.</span><span class="index-name">The <em>Media Room</em></span><span class="index-pages">SPACE OF EXPRESSION</span></div>
+    <div class="index-row"><span class="index-num">X.</span><span class="index-name">The <em>Symposium</em></span><span class="index-pages">SPACE OF CREATION</span></div>
+    <div class="index-row"><span class="index-num">XI.</span><span class="index-name">The <em>Laundry</em></span><span class="index-pages">SPACE OF CARE</span></div>
+    <div class="index-row"><span class="index-num">XII.</span><span class="index-name">The <em>Tech Room</em></span><span class="index-pages">SPACE OF PRECISION</span></div>
+    <div class="index-row"><span class="index-num">XIII.</span><span class="index-name">The <em>Zen Room</em></span><span class="index-pages">SPACE OF STILLNESS</span></div>
+  </div>
+
+  <div class="colophon">Use with intent · Reset completely · Leave it ready</div>
+</body></html>

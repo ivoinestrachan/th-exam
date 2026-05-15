@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Collective Rota — Weekly schedule</title>
+<style>
+  @page { size: A3 landscape; margin: 12mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #EDE4C9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1F1B14; }
+  .poster {
+    background: #FAF3E0;
+    max-width: 1400px;
+    margin: 16px auto;
+    padding: 22px 24px 18px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #C4B998;
+    margin-bottom: 16px;
+    gap: 24px;
+  }
+  .eyebrow { font-size: 11px; letter-spacing: 0.22em; color: #5C5340; font-weight: 600; margin-bottom: 6px; }
+  .title { font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -0.01em; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; align-items: center; padding-bottom: 4px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; }
+  .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    align-items: stretch;
+  }
+  .day-head { text-align: center; padding: 2px 0 6px; }
+  .day-name { font-weight: 700; font-size: 15px; }
+  .day-short { font-size: 9px; letter-spacing: 0.2em; color: #7A6E50; margin-top: 2px; font-weight: 500; }
+
+  .card {
+    border-radius: 7px;
+    padding: 8px 9px 9px;
+    font-size: 11.5px;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .card-head { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; flex-wrap: wrap; }
+  .card-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; }
+  .pill {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2.5px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  ul { margin: 0; padding-left: 14px; list-style: disc; }
+  li { margin-bottom: 3px; }
+  li:last-child { margin-bottom: 0; }
+  .timed-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 4px; }
+  .timed-row:last-child { margin-bottom: 0; }
+  em { font-style: italic; opacity: 0.85; font-weight: 500; }
+
+  /* Category palette */
+  .mv  { background: #B8DDD4; color: #1F5448; } .mv-pill  { background: #2E6F5B; }
+  .mv-rest { background: #D8EAE4; color: #4A7268; } .mv-rest .card-label { color: #4A7268; }
+  .cl  { background: #D8E6F1; color: #2A4860; } .cl-pill  { background: #3F5C75; }
+  .sp  { background: #D8E5C5; color: #364D1E; } .sp-pill  { background: #3F5C28; }
+  .ck  { background: #EFD685; color: #5A4710; } .ck-pill  { background: #7A6019; }
+  .pr  { background: #D8C8EA; color: #3D2A65; } .pr-pill  { background: #5A4488; }
+  .ln  { background: #EDB8B3; color: #6E2520; } .ln-pill  { background: #8A3A35; }
+  .rs  { background: #D2C5A4; color: #4D4128; } .rs-pill  { background: #6F6243; }
+
+  .tiers { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 10px; font-weight: 500; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 3px; vertical-align: middle; }
+  .t1 { background: #8FC4B5; }
+  .t2 { background: #4E9482; }
+  .t3 { background: #1F5448; }
+  .rest-note { font-size: 10px; font-style: italic; opacity: 0.85; margin-top: 4px; }
+  .pr-off {
+    background: #F0E9F6;
+    color: #9A8AB5;
+    border-radius: 8px;
+    padding: 10px 11px 11px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .pr-off .card-label { opacity: 0.55; font-weight: 700; letter-spacing: 0.07em; font-size: 11px; }
+  .pr-off .dash { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 18px; opacity: 0.5; }
+
+  .footer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #C4B998;
+  }
+  .key { display: flex; gap: 8px; align-items: flex-start; }
+  .key-letter {
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .key-name { font-weight: 700; font-size: 12px; margin-bottom: 2px; }
+  .key-desc { color: #5C5340; font-size: 10.5px; line-height: 1.45; }
+
+  @media print {
+    body { background: #FAF3E0; }
+    .poster { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">COLLECTIVE ROTA</div>
+      <div class="title">Weekly schedule</div>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="swatch" style="background:#B8DDD4;"></span>Movement</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8E6F1;"></span>Cleaning</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8E5C5;"></span>Supplies</span>
+      <span class="legend-item"><span class="swatch" style="background:#EFD685;"></span>Cooking</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8C8EA;"></span>Procurement</span>
+      <span class="legend-item"><span class="swatch" style="background:#EDB8B3;"></span>Laundry</span>
+      <span class="legend-item"><span class="swatch" style="background:#D2C5A4;"></span>Reset</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Day headers -->
+    <div class="day-head"><div class="day-name">Monday</div><div class="day-short">MON</div></div>
+    <div class="day-head"><div class="day-name">Tuesday</div><div class="day-short">TUE</div></div>
+    <div class="day-head"><div class="day-name">Wednesday</div><div class="day-short">WED</div></div>
+    <div class="day-head"><div class="day-name">Thursday</div><div class="day-short">THU</div></div>
+    <div class="day-head"><div class="day-name">Friday</div><div class="day-short">FRI</div></div>
+    <div class="day-head"><div class="day-name">Saturday</div><div class="day-short">SAT</div></div>
+    <div class="day-head"><div class="day-name">Sunday</div><div class="day-short">SUN</div></div>
+
+    <!-- MOVEMENT row -->
+    <div class="card mv"><div class="card-head"><span class="card-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><ul><li>Lower Body</li></ul></div>
+    <div class="card mv"><div class="card-head"><span class="card-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><ul><li>Core &amp; Stability</li></ul></div>
+    <div class="card mv mv-rest"><div class="card-head"><span class="card-label">MOVEMENT</span></div><ul><li>Rest day</li></ul><div class="rest-note">Light walking or stretching</div></div>
+    <div class="card mv"><div class="card-head"><span class="card-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><ul><li>Upper Body</li></ul></div>
+    <div class="card mv"><div class="card-head"><span class="card-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><ul><li>Full Body &amp; Community</li></ul></div>
+    <div class="card mv"><div class="card-head"><span class="card-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><ul><li>Skill Lab</li></ul></div>
+    <div class="card mv mv-rest"><div class="card-head"><span class="card-label">MOVEMENT</span></div><ul><li>Rest day</li></ul><div class="rest-note">Full recovery</div></div>
+
+    <!-- CLEAN row -->
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Bathrooms</li><li>Symposium</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Atrium</li><li>Zen Room</li><li>Studio</li><li>Girl's Bathroom</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Bathrooms</li><li>Forge</li><li>Closet</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Tech Room</li><li>Zen Room</li><li>Girl's Bathroom</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Bathrooms</li><li>Symposium</li><li>Forge</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Atrium</li><li>Zen Room</li><li>Studio</li><li>Girl's Bathroom</li></ul></div>
+    <div class="card cl"><div class="card-head"><span class="card-label">CLEAN</span><span class="pill cl-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Bathrooms</li><li>Tech Room</li><li>Forge</li></ul></div>
+
+    <!-- SUPPLIES row -->
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Forge</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Bathroom</li><li>Laundry</li><li>Zen Room</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Tech Room</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Bathroom</li><li>Symposium</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Laundry</li><li>Closet</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Bathroom</li><li>Atrium</li></ul></div>
+    <div class="card sp"><div class="card-head"><span class="card-label">SUPPLIES</span><span class="pill sp-pill">9–10 AM</span></div><ul><li>Kitchen</li><li>Studio</li></ul></div>
+
+    <!-- COOKING row -->
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+    <div class="card ck"><div class="card-head"><span class="card-label">COOKING</span></div><div class="timed-row"><span class="pill ck-pill">8:45–10:30 AM</span><span>Breakfast</span></div><div class="timed-row"><span class="pill ck-pill">3–6 PM</span><span>Weekly meal prep</span></div><div class="timed-row"><span class="pill ck-pill">6–8 PM</span><span>Dinner</span></div></div>
+
+    <!-- PROCUREMENT row -->
+    <div class="pr-off"><div class="card-head"><span class="card-label">PROCUREMENT</span></div><div class="dash">—</div></div>
+    <div class="card pr"><div class="card-head"><span class="card-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><ul><li>Create basket</li><li>Place orders</li><li>Pick up orders</li></ul></div>
+    <div class="pr-off"><div class="card-head"><span class="card-label">PROCUREMENT</span></div><div class="dash">—</div></div>
+    <div class="card pr"><div class="card-head"><span class="card-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><ul><li>Create basket</li><li>Place orders</li><li>Pick up orders</li></ul></div>
+    <div class="pr-off"><div class="card-head"><span class="card-label">PROCUREMENT</span></div><div class="dash">—</div></div>
+    <div class="card pr"><div class="card-head"><span class="card-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><ul><li>Create basket</li><li>Place orders</li><li>Pick up orders</li></ul></div>
+    <div class="pr-off"><div class="card-head"><span class="card-label">PROCUREMENT</span></div><div class="dash">—</div></div>
+
+    <!-- LAUNDRY row -->
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Whites</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Socks &amp; underwear</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Towels</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Whites</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Socks &amp; underwear</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Towels</span></div></div>
+    <div class="card ln"><div class="card-head"><span class="card-label">LAUNDRY</span></div><div class="timed-row"><span class="pill ln-pill">9–10 AM</span><span>Mixed</span></div><div class="timed-row"><span class="pill ln-pill">9–10 PM</span><span>Wool</span></div></div>
+
+    <!-- RESET row -->
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+    <div class="card rs"><div class="card-head"><span class="card-label">RESET</span></div><div class="timed-row"><span class="pill rs-pill">9 PM</span><span>Reset rooms per manual <em>10 min</em></span></div><div class="timed-row"><span class="pill rs-pill">10 PM</span><span>Sleeping room setup <em>25 min</em></span></div></div>
+
+  </div>
+
+  <div class="footer">
+    <div class="key"><div class="key-letter mv">M</div><div><div class="key-name">Movement</div><div class="key-desc">Daily group calisthenics. 10 min warm-up, 20 min jog, then circuit.</div></div></div>
+    <div class="key"><div class="key-letter cl">C</div><div><div class="key-name">Cleaning</div><div class="key-desc">Work through each room on the day's list using the room manual. Clean rooms top to bottom. Tick off only when done to standard.</div></div></div>
+    <div class="key"><div class="key-letter sp">S</div><div><div class="key-name">Supplies</div><div class="key-desc">Walk each listed room with its supply list. Restock and log anything missing on the inventory sheet. Alert if bulk supply low.</div></div></div>
+    <div class="key"><div class="key-letter ck">K</div><div><div class="key-name">Cooking</div><div class="key-desc">Cook the meal from the meal set, then clean the kitchen thoroughly afterwards within the slot.</div></div></div>
+    <div class="key"><div class="key-letter pr">P</div><div><div class="key-name">Procurement</div><div class="key-desc">Create basket, place orders, pick up orders.</div></div></div>
+    <div class="key"><div class="key-letter ln">L</div><div><div class="key-name">Laundry</div><div class="key-desc">Two loads daily. Morning is always Mixed; evening is the labelled type. Wash, dry, fold, return.</div></div></div>
+    <div class="key"><div class="key-letter rs">R</div><div><div class="key-name">Reset</div><div class="key-desc">Lightly tidy and restore each room to order per the room manual. Set up the sleeping room ready for the night.</div></div></div>
+  </div>
+
+</div>
+</body>
+</html>

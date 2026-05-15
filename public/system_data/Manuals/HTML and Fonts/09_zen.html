@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #2a2520; background: #f0e9dc; }
+.page { width: 210mm; height: 297mm; padding: 18mm 18mm; position: relative; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.kanji { position: absolute; top: 14mm; right: 18mm; font-family: 'Noto Serif CJK JP', 'Yu Mincho', serif; font-size: 64pt; color: #c4b8a0; line-height: 1; }
+.eyebrow { font-size: 8pt; letter-spacing: 5pt; color: #8a7a5c; text-transform: uppercase; }
+h1 { font-family: Georgia, serif; font-weight: 300; font-size: 40pt; letter-spacing: -0.5pt; line-height: 0.95; color: #2a2520; margin-top: 2mm; }
+h1 em { font-style: italic; color: #8a7a5c; }
+.tagline { font-style: italic; color: #8a7a5c; font-size: 11pt; margin-top: 2mm; padding-bottom: 5mm; border-bottom: 1px solid #c4b8a0; margin-bottom: 8mm; }
+.section-tag { font-size: 8pt; letter-spacing: 4pt; text-transform: uppercase; color: #8a7a5c; margin-bottom: 5mm; }
+/* Page 1 — Daily rhythm timeline */
+.rule { background: #2a2520; color: #f0e9dc; padding: 5mm 6mm; margin-bottom: 7mm; font-family: Georgia, serif; font-size: 12pt; line-height: 1.4; font-style: italic; text-align: center; }
+.rule em { color: #c4b8a0; font-style: normal; }
+.timeline { position: relative; padding-left: 28mm; margin-bottom: 5mm; }
+.timeline::before { content: ''; position: absolute; left: 22mm; top: 4mm; bottom: 4mm; width: 1px; background: #c4b8a0; }
+.tick-row { display: flex; gap: 5mm; padding: 3mm 0; position: relative; }
+.tick-row::before { content: ''; position: absolute; left: -8mm; top: 7mm; width: 4mm; height: 4mm; background: #8a7a5c; border-radius: 50%; }
+.tick-time { position: absolute; left: -28mm; top: 5mm; width: 18mm; text-align: right; font-family: Georgia, serif; font-style: italic; font-size: 10pt; color: #8a7a5c; line-height: 1.2; }
+.tick-content { flex: 1; padding-bottom: 2mm; }
+.tick-mode { font-family: Georgia, serif; font-size: 14pt; color: #2a2520; line-height: 1; margin-bottom: 1mm; }
+.tick-mode em { color: #8a7a5c; font-style: italic; }
+.tick-rule { font-size: 9pt; color: #5a5040; line-height: 1.4; }
+.tick-rule strong { color: #8a7a5c; font-weight: 600; }
+/* Etiquette band */
+.etiquette { background: #fff8eb; border: 1px solid #c4b8a0; padding: 4mm 5mm; margin-top: 4mm; }
+.etiquette-title { font-size: 8pt; letter-spacing: 3pt; color: #8a7a5c; margin-bottom: 3mm; }
+.etiquette-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; font-size: 8.5pt; line-height: 1.4; color: #2a2520; }
+.etiquette-grid strong { color: #8a7a5c; display: block; font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: 9.5pt; margin-bottom: 1mm; }
+/* Page 2 — Items manual */
+.items-rule { background: #fff8eb; border-left: 3px solid #8a7a5c; padding: 4mm 6mm; margin-bottom: 7mm; }
+.items-rule-title { font-size: 8pt; letter-spacing: 3pt; color: #8a7a5c; margin-bottom: 2mm; }
+.items-rule-text { font-family: Georgia, serif; font-size: 12pt; font-style: italic; color: #2a2520; line-height: 1.4; }
+.items-rule-text em { color: #8a7a5c; font-style: normal; font-weight: 600; }
+.items { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-bottom: 6mm; }
+.item { background: #fff8eb; padding: 4mm 5mm; border-top: 2px solid #8a7a5c; }
+.item-icon { font-size: 22pt; color: #8a7a5c; line-height: 1; margin-bottom: 1mm; font-family: Georgia, serif; }
+.item-name { font-family: Georgia, serif; font-size: 14pt; color: #2a2520; font-style: italic; margin-bottom: 1mm; }
+.item-rule { font-size: 8.5pt; line-height: 1.5; color: #2a2520; padding-top: 2mm; border-top: 1px dotted #c4b8a0; }
+/* Closing */
+.closing { background: #2a2520; color: #f0e9dc; padding: 5mm; }
+.closing-title { font-size: 8pt; letter-spacing: 3pt; color: #c4b8a0; margin-bottom: 3mm; text-align: center; }
+.checks { display: flex; justify-content: space-around; }
+.check { text-align: center; }
+.tick { font-size: 18pt; color: #c4b8a0; display: block; margin-bottom: 1mm; }
+.check-label { font-size: 8.5pt; }
+.footer { position: absolute; bottom: 10mm; left: 18mm; right: 18mm; text-align: center; font-style: italic; font-size: 9pt; color: #8a7a5c; letter-spacing: 1pt; }
+</style></head>
+<body>
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="kanji">禅</div>
+  <div class="eyebrow">House Manual</div>
+  <h1>The <em>Zen Room</em></h1>
+  <div class="tagline">One floor · Three purposes · Sleep · Work · Meditation</div>
+
+  <div class="rule">The room <em>changes shape</em> four times a day.<br>Whichever mode is ending, leave it ready for whichever mode is next.</div>
+
+  <div class="section-tag">— THE DAILY RHYTHM —</div>
+
+  <div class="timeline">
+    <div class="tick-row">
+      <div class="tick-time">00:00<br>09:00</div>
+      <div class="tick-content">
+        <div class="tick-mode">I. <em>Sleep</em></div>
+        <div class="tick-rule">Floor clear · phones off · no talking after lights out · sleeping spots assigned. <strong>Silence holds.</strong></div>
+      </div>
+    </div>
+    <div class="tick-row">
+      <div class="tick-time">09:00<br>10:00</div>
+      <div class="tick-content">
+        <div class="tick-mode">— <em>Reset</em> —</div>
+        <div class="tick-rule">Futons rolled · ornaments dusted · tatami swept · chabudai out · lamps on · fountain on. <strong>Duty pair.</strong></div>
+      </div>
+    </div>
+    <div class="tick-row">
+      <div class="tick-time">10:00<br>21:00</div>
+      <div class="tick-content">
+        <div class="tick-mode">II. <em>Work</em></div>
+        <div class="tick-rule">Voices low · tea fine · no food · headphones for audio · calls outside the room. <strong>Tidy before leaving.</strong></div>
+      </div>
+    </div>
+    <div class="tick-row">
+      <div class="tick-time">21:00<br>23:00</div>
+      <div class="tick-content">
+        <div class="tick-mode">III. <em>Meditation</em></div>
+        <div class="tick-rule">Laptops away · tables folded · lanterns lit · cushions out · incense lit. <strong>No screens.</strong></div>
+      </div>
+    </div>
+    <div class="tick-row">
+      <div class="tick-time">23:00<br>00:00</div>
+      <div class="tick-content">
+        <div class="tick-mode">— <em>Sleep Prep</em> —</div>
+        <div class="tick-rule">Cushions stored · futons rolled out · fountain off · last lantern dim · AC night mode. <strong>Silence returns.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="etiquette">
+    <div class="etiquette-title">— GENERAL ETIQUETTE —</div>
+    <div class="etiquette-grid">
+      <div><strong>Objects</strong>Every object returned before you leave. No experimenting.</div>
+      <div><strong>Climate</strong>AC remote and tablet by the door. Always extinguish candles before sleep.</div>
+      <div><strong>Library</strong>Books rotate weekly. They stay in the room.</div>
+    </div>
+  </div>
+
+  <div class="footer">— page one : the rhythm —</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="kanji">物</div>
+  <div class="eyebrow">House Manual — Items</div>
+  <h1>The <em>Six Objects</em></h1>
+  <div class="tagline">Each ritual object · One handling rule</div>
+
+  <div class="items-rule">
+    <div class="items-rule-title">— THE GOVERNING RULE —</div>
+    <div class="items-rule-text">Touch each object <em>only the way it asks to be touched.</em> If you don't know — leave it.</div>
+  </div>
+
+  <div class="items">
+    <div class="item">
+      <div class="item-icon">⛯</div>
+      <div class="item-name">Mabkhar</div>
+      <div class="item-rule">Charcoal lit with tongs until grey-white, then one chip of oud or bukhoor.</div>
+    </div>
+    <div class="item">
+      <div class="item-icon">❦</div>
+      <div class="item-name">Oud · Frankincense</div>
+      <div class="item-rule">Fingernail-sized piece per evening. One chip burns fully before adding a second.</div>
+    </div>
+    <div class="item">
+      <div class="item-icon">⌇</div>
+      <div class="item-name">Shakuhachi</div>
+      <div class="item-rule">Blow across, not into, the angled mouthpiece. Wipe inside dry. Rests on its silk sleeve.</div>
+    </div>
+    <div class="item">
+      <div class="item-icon">◉</div>
+      <div class="item-name">Astrolabe</div>
+      <div class="item-rule">Lift by the mater only — never the rete. Soft cloth only. No polish.</div>
+    </div>
+    <div class="item">
+      <div class="item-icon">☉</div>
+      <div class="item-name">Orrery</div>
+      <div class="item-rule">Turn slowly in the engraved arrow's direction only. One revolution ≈ one Earth-year.</div>
+    </div>
+    <div class="item">
+      <div class="item-icon">◯</div>
+      <div class="item-name">Rin Bell</div>
+      <div class="item-rule">Strike on the side with the wooden mallet, never the rim. Three slow strikes — for transitions only.</div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <div class="closing-title">— THE ZEN ROOM IS AT REST WHEN —</div>
+    <div class="checks">
+      <div class="check"><span class="tick">✓</span><div class="check-label">Mode honoured</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Objects home</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Candles out</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Silence held</div></div>
+    </div>
+  </div>
+
+  <div class="footer">— page two : the objects —</div>
+</div>
+</body></html>

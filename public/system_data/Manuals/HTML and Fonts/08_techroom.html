@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #d8e4ec; background: #0d141c; width: 210mm; height: 297mm; padding: 16mm; position: relative; overflow: hidden; }
+.header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #2a3a4a; padding-bottom: 4mm; margin-bottom: 7mm; }
+.eyebrow { font-family: 'Courier New', monospace; font-size: 8pt; letter-spacing: 4pt; color: #4ac4d8; text-transform: uppercase; }
+h1 { font-family: Georgia, serif; font-size: 38pt; line-height: 1; color: #d8e4ec; font-weight: 300; margin-top: 1mm; }
+h1 em { color: #4ac4d8; font-style: italic; }
+.spec { text-align: right; font-family: 'Courier New', monospace; font-size: 8pt; color: #6a8090; line-height: 1.6; }
+.spec strong { color: #4ac4d8; font-weight: normal; }
+/* The two states */
+.states { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 6mm; }
+.state { background: #142030; padding: 4mm 5mm; border-top: 2px solid #4ac4d8; }
+.state.exit { border-top-color: #4ac4d8; }
+.state-tag { font-family: 'Courier New', monospace; font-size: 7.5pt; letter-spacing: 2pt; color: #4ac4d8; margin-bottom: 2mm; }
+.state-name { font-family: Georgia, serif; font-size: 14pt; color: #d8e4ec; font-style: italic; margin-bottom: 3mm; }
+.state-list { list-style: none; font-size: 8.5pt; line-height: 1.5; }
+.state-list li { padding-left: 4mm; position: relative; margin-bottom: 1mm; }
+.state-list li::before { content: '▸'; position: absolute; left: 0; color: #4ac4d8; font-size: 8pt; }
+/* Generative rule */
+.rule { background: #4ac4d8; color: #0d141c; padding: 4mm 6mm; margin-bottom: 6mm; font-family: Georgia, serif; font-size: 13pt; line-height: 1.4; font-style: italic; text-align: center; }
+.rule strong { font-style: normal; font-weight: 700; }
+/* Three surfaces */
+.section-tag { font-family: 'Courier New', monospace; font-size: 8pt; letter-spacing: 3pt; color: #4ac4d8; margin-bottom: 3mm; text-transform: uppercase; }
+.surfaces { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; margin-bottom: 6mm; }
+.surface { background: #142030; padding: 4mm; border: 1px solid #2a3a4a; }
+.surface-num { font-family: 'Courier New', monospace; font-size: 7pt; color: #4ac4d8; letter-spacing: 1.5pt; }
+.surface-name { font-family: Georgia, serif; font-size: 13pt; color: #d8e4ec; font-style: italic; margin: 1mm 0 2mm; }
+.surface-icon { font-family: 'Courier New', monospace; color: #4ac4d8; font-size: 11pt; line-height: 1.2; padding: 2mm 0 3mm; border-bottom: 1px dotted #2a3a4a; margin-bottom: 3mm; letter-spacing: 1pt; }
+.surface-rule { font-size: 8pt; line-height: 1.45; color: #d8e4ec; }
+.surface-rule strong { color: #4ac4d8; display: block; font-family: 'Courier New', monospace; font-size: 7pt; letter-spacing: 1.5pt; margin-bottom: 1mm; text-transform: uppercase; font-weight: normal; }
+/* Failure modes */
+.failures { background: #142030; border: 1px solid #2a3a4a; padding: 5mm; margin-bottom: 6mm; }
+.failure-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 4mm; padding: 2mm 0; border-bottom: 1px dotted #2a3a4a; font-size: 8.5pt; }
+.failure-row:last-child { border: none; }
+.failure-name { color: #f08a5a; font-family: 'Courier New', monospace; font-size: 8pt; letter-spacing: 0.5pt; }
+.failure-fix { color: #d8e4ec; line-height: 1.4; }
+.failure-fix strong { color: #4ac4d8; }
+/* Issue book + closing */
+.bottom { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4mm; }
+.issue { background: #142030; border-left: 3px solid #f08a5a; padding: 4mm 5mm; }
+.issue-title { font-family: 'Courier New', monospace; font-size: 7.5pt; letter-spacing: 2pt; color: #f08a5a; margin-bottom: 2mm; }
+.issue-text { font-size: 8.5pt; line-height: 1.4; color: #d8e4ec; }
+.issue-text strong { color: #f08a5a; }
+.closing { background: #4ac4d8; color: #0d141c; padding: 4mm 5mm; }
+.closing-title { font-family: 'Courier New', monospace; font-size: 7.5pt; letter-spacing: 3pt; margin-bottom: 3mm; }
+.checks { display: flex; justify-content: space-around; }
+.check { text-align: center; }
+.tick { font-size: 16pt; display: block; line-height: 1; margin-bottom: 1mm; }
+.check-label { font-size: 7.5pt; }
+.footer { position: absolute; bottom: 8mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; font-family: 'Courier New', monospace; font-size: 7pt; color: #4a6070; letter-spacing: 1.5pt; }
+</style></head>
+<body>
+  <div class="header">
+    <div>
+      <div class="eyebrow">// NATURAL ORDER · TECH ROOM //</div>
+      <h1>The <em>Tech Room</em></h1>
+    </div>
+    <div class="spec">
+      <div><span>SURFACES</span> <strong>03</strong></div>
+      <div><span>STATES</span> <strong>02</strong></div>
+      <div><span>RULE</span> <strong>RETURN TO SILHOUETTE</strong></div>
+    </div>
+  </div>
+
+  <div class="rule"><strong>Every tool, lens, drone, and cable</strong> returns to its silhouette, hook, or table — <em>before you leave the room.</em></div>
+
+  <div class="section-tag">— TWO STATES —</div>
+  <div class="states">
+    <div class="state">
+      <div class="state-tag">↗ OPENING — VERIFY ON ARRIVAL</div>
+      <div class="state-name">The Room is Ready</div>
+      <ul class="state-list">
+        <li>Peripherals match the colour-coded labels</li>
+        <li>Drones sit on their peg-board outlines</li>
+        <li>Printers sit on the shelf</li>
+        <li>Lens count matches the cabinet inventory</li>
+      </ul>
+    </div>
+    <div class="state exit">
+      <div class="state-tag">↙ ZERO-STATE — ON EXIT</div>
+      <div class="state-name">The Room is Reset</div>
+      <ul class="state-list">
+        <li>Peripherals returned to assigned tables</li>
+        <li>Drones home · batteries in charge case</li>
+        <li>Lenses capped · cabinet locked</li>
+        <li>Cables coiled · Canon front-panel off · door locked</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-tag">— THREE SURFACES —</div>
+  <div class="surfaces">
+    <div class="surface">
+      <div class="surface-num">[ 01 ]</div>
+      <div class="surface-name">Tables</div>
+      <div class="surface-icon">▢ ▢ ▢</div>
+      <div class="surface-rule"><strong>System</strong>Colour-coded labels assign each peripheral to a specific table.</div>
+    </div>
+    <div class="surface">
+      <div class="surface-num">[ 02 ]</div>
+      <div class="surface-name">Pegboard</div>
+      <div class="surface-icon">⬡ ◯ ⬡</div>
+      <div class="surface-rule"><strong>System</strong>Drones and accessories have outlined silhouettes or labelled hooks.</div>
+    </div>
+    <div class="surface">
+      <div class="surface-num">[ 03 ]</div>
+      <div class="surface-name">Cabinet</div>
+      <div class="surface-icon">◉ ◉ ◉</div>
+      <div class="surface-rule"><strong>System</strong>Lenses tracked against the inventory list inside the cabinet door.</div>
+    </div>
+  </div>
+
+  <div class="section-tag">— FAILURE MODES · KNOWN FIXES —</div>
+  <div class="failures">
+    <div class="failure-row">
+      <div class="failure-name">CANON · paper jam</div>
+      <div class="failure-fix">Power off. Open top. Pull paper. <strong>Check no scraps.</strong> Power on.</div>
+    </div>
+    <div class="failure-row">
+      <div class="failure-name">CANON · streaks</div>
+      <div class="failure-fix">Run nozzle check from touchscreen. Still bad? <strong>Run print head clean.</strong></div>
+    </div>
+    <div class="failure-row">
+      <div class="failure-name">CANON · power-down</div>
+      <div class="failure-fix"><strong>Front panel only.</strong> Never the wall switch — the print head must park.</div>
+    </div>
+    <div class="failure-row">
+      <div class="failure-name">DJI NEO 2 · protector on at start</div>
+      <div class="failure-fix">Power off. Remove protector. <strong>Power on again.</strong></div>
+    </div>
+    <div class="failure-row">
+      <div class="failure-name">DJI NEO 2 · protector misfit</div>
+      <div class="failure-fix">Refit correctly. <strong>Wrong placement deforms the props.</strong></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="issue">
+      <div class="issue-title">— ISSUE BOOK · BY THE DOOR —</div>
+      <div class="issue-text">Anything missing or broken? <strong>Log it before you leave.</strong> One source of truth.</div>
+    </div>
+    <div class="closing">
+      <div class="closing-title">— ROOM IS AT ZERO-STATE WHEN —</div>
+      <div class="checks">
+        <div class="check"><span class="tick">✓</span><div class="check-label">Tables match</div></div>
+        <div class="check"><span class="tick">✓</span><div class="check-label">Pegboard full</div></div>
+        <div class="check"><span class="tick">✓</span><div class="check-label">Cabinet locked</div></div>
+        <div class="check"><span class="tick">✓</span><div class="check-label">Door locked</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer"><span>// TELOS HOUSE / TECH ROOM //</span><span>RETURN · LOG · LOCK</span></div>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1a1f2e; background: #eef0f5; width: 210mm; height: 297mm; padding: 18mm 16mm; position: relative; overflow: hidden; }
+.eyebrow { font-size: 8pt; letter-spacing: 4pt; color: #5a6890; text-transform: uppercase; }
+h1 { font-family: Georgia, serif; font-weight: 300; font-size: 36pt; letter-spacing: -0.5pt; line-height: 1; color: #1a1f2e; margin-top: 2mm; }
+h1 em { font-style: italic; color: #5a6890; }
+.tagline { font-style: italic; color: #5a6890; font-size: 10.5pt; margin-top: 2mm; padding-bottom: 5mm; border-bottom: 1px solid #c0c8d8; margin-bottom: 7mm; }
+.layout { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 8mm; margin-bottom: 6mm; }
+.cupboard-wrap { display: flex; gap: 5mm; }
+.axis { width: 8mm; display: flex; flex-direction: column; align-items: center; padding: 4mm 0; }
+.axis-arrow { color: #5a6890; font-size: 13pt; line-height: 1; }
+.axis-word { font-size: 7pt; letter-spacing: 1.5pt; color: #5a6890; text-transform: uppercase; line-height: 1.4; text-align: center; margin: 1mm 0; }
+.axis-word span { display: block; }
+.axis-line { flex: 1; width: 1px; background: #5a6890; opacity: 0.4; margin: 2mm 0; min-height: 30mm; }
+.cupboard { background: #fff; border: 2px solid #5a6890; padding: 0; position: relative; flex: 1; }
+.cupboard-label { position: absolute; top: -3mm; left: 50%; transform: translateX(-50%); background: #eef0f5; padding: 0 3mm; font-size: 8pt; letter-spacing: 2pt; color: #5a6890; }
+.shelf { padding: 6mm 5mm; border-bottom: 1px solid #c0c8d8; display: flex; align-items: center; gap: 4mm; min-height: 20mm; }
+.shelf:last-child { border-bottom: none; }
+.shelf-num { font-family: Georgia, serif; font-size: 14pt; color: #5a6890; font-style: italic; width: 8mm; }
+.shelf-icon { font-size: 16pt; color: #5a6890; width: 8mm; text-align: center; }
+.shelf-content { flex: 1; }
+.shelf-name { font-weight: 600; font-size: 10pt; color: #1a1f2e; line-height: 1.1; }
+.shelf-desc { font-size: 8pt; color: #5a6890; font-style: italic; margin-top: 0.5mm; }
+.shelf-empty { font-size: 8pt; color: #a0a8b8; font-style: italic; }
+.golden { background: #1a1f2e; color: #eef0f5; padding: 5mm; margin-bottom: 5mm; }
+.golden-title { font-size: 8pt; letter-spacing: 3pt; color: #c0c8d8; margin-bottom: 3mm; }
+.golden-text { font-family: Georgia, serif; font-size: 12pt; line-height: 1.4; }
+.golden-text em { color: #c0c8d8; font-style: italic; }
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 5mm; }
+.rules { background: #fff; padding: 4mm; }
+.rules.do { border-top: 2px solid #5a6890; }
+.rules.dont { border-top: 2px solid #b85a5a; }
+.rules-title { font-size: 8pt; letter-spacing: 2.5pt; color: #5a6890; margin-bottom: 3mm; text-transform: uppercase; }
+.rules.dont .rules-title { color: #b85a5a; }
+.rules ul { list-style: none; font-size: 8.5pt; line-height: 1.5; }
+.rules li { padding-left: 4mm; position: relative; margin-bottom: 1mm; color: #1a1f2e; }
+.rules.do li::before { content: '✓'; position: absolute; left: 0; color: #5a6890; }
+.rules.dont li::before { content: '×'; position: absolute; left: 0; color: #b85a5a; }
+.rule-strip { background: #fff; border-left: 3px solid #5a6890; padding: 3mm 4mm; font-size: 8.5pt; line-height: 1.45; color: #1a1f2e; }
+.rule-strip strong { color: #5a6890; font-weight: 600; }
+.mnemonic { margin-top: 6mm; text-align: center; padding: 5mm; background: #fff; border: 1px dashed #5a6890; }
+.mnemonic-title { font-size: 7.5pt; letter-spacing: 4pt; color: #5a6890; margin-bottom: 2mm; }
+.mnemonic-text { font-family: Georgia, serif; font-size: 12pt; font-style: italic; color: #1a1f2e; line-height: 1.35; }
+.mnemonic-text strong { color: #5a6890; font-style: normal; font-weight: 600; }
+</style></head>
+<body>
+  <div class="eyebrow">The Cupboard Manual</div>
+  <h1>Electronics &amp; <em>Stationery</em></h1>
+  <div class="tagline">Cables coiled · Pens capped · Everything in its place</div>
+
+  <div class="layout">
+    <div class="cupboard-wrap">
+      <div class="axis">
+        <div class="axis-arrow">▲</div>
+        <div class="axis-word"><span>T</span><span>O</span><span>P</span></div>
+        <div class="axis-line"></div>
+        <div class="axis-word"><span>B</span><span>O</span><span>T</span><span>T</span><span>O</span><span>M</span></div>
+        <div class="axis-arrow">▼</div>
+      </div>
+      <div class="cupboard">
+        <div class="cupboard-label">— THE CUPBOARD —</div>
+        <div class="shelf">
+          <div class="shelf-num">01</div>
+          <div class="shelf-icon">◌</div>
+          <div class="shelf-content"><div class="shelf-empty">To be assigned</div></div>
+        </div>
+        <div class="shelf">
+          <div class="shelf-num">02</div>
+          <div class="shelf-icon">◌</div>
+          <div class="shelf-content"><div class="shelf-empty">To be assigned</div></div>
+        </div>
+        <div class="shelf">
+          <div class="shelf-num">03</div>
+          <div class="shelf-icon">⚡</div>
+          <div class="shelf-content"><div class="shelf-name">Chargers &amp; Power Banks</div><div class="shelf-desc">coiled, never tangled</div></div>
+        </div>
+        <div class="shelf">
+          <div class="shelf-num">04</div>
+          <div class="shelf-icon">✎</div>
+          <div class="shelf-content"><div class="shelf-name">Stationery</div><div class="shelf-desc">pens · pencils · markers, capped</div></div>
+        </div>
+        <div class="shelf">
+          <div class="shelf-num">05</div>
+          <div class="shelf-icon">▭</div>
+          <div class="shelf-content"><div class="shelf-name">Notebooks &amp; iPads</div><div class="shelf-desc">stacked flat, no weight on top</div></div>
+        </div>
+        <div class="shelf">
+          <div class="shelf-num">06</div>
+          <div class="shelf-icon">▣</div>
+          <div class="shelf-content"><div class="shelf-name">Old Laptops</div><div class="shelf-desc">in the labelled box only</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="golden">
+        <div class="golden-title">— THE RULE —</div>
+        <div class="golden-text">Every cable, pen and device returns to <em>its assigned shelf,</em> immediately after use.</div>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rules do">
+          <div class="rules-title">Always</div>
+          <ul>
+            <li>Coil chargers before storing</li>
+            <li>Cap pens and markers</li>
+            <li>Box old laptops</li>
+            <li>Stack notebooks flat</li>
+          </ul>
+        </div>
+        <div class="rules dont">
+          <div class="rules-title">Never</div>
+          <ul>
+            <li>Leave cables tangled</li>
+            <li>Stack weight on iPads</li>
+            <li>Mix stationery with devices</li>
+            <li>Store damaged batteries</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rule-strip"><strong>If cables are tangled →</strong> untangle, coil, return. <strong>If a battery is damaged or leaking →</strong> remove, isolate, dispose at recycling. <strong>If something heavy is on an iPad →</strong> remove, inspect screen.</div>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-title">— REMEMBER —</div>
+    <div class="mnemonic-text"><strong>Chargers</strong>, <strong>stationery</strong>, <strong>notebooks</strong>, <strong>laptops</strong> — each on their own shelf</div>
+  </div>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1f3a36; background: #eef5f1; }
+.page { width: 210mm; height: 297mm; padding: 18mm 16mm; position: relative; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.eyebrow { font-size: 8pt; letter-spacing: 4pt; color: #5a8a7a; text-transform: uppercase; }
+h1 { font-family: Georgia, serif; font-weight: 300; font-size: 42pt; letter-spacing: -0.5pt; line-height: 0.95; color: #1f3a36; margin-top: 2mm; }
+h1 em { font-style: italic; color: #5a8a7a; }
+.tagline { font-style: italic; color: #5a8a7a; font-size: 11pt; margin-top: 2mm; padding-bottom: 5mm; border-bottom: 1px solid #b8d4c5; margin-bottom: 7mm; }
+.section-tag { font-size: 8pt; letter-spacing: 4pt; text-transform: uppercase; color: #5a8a7a; margin-bottom: 4mm; }
+/* Page 1: Wash hours + Five baskets + Calendar */
+.golden { background: #1f3a36; color: #eef5f1; padding: 5mm 6mm; margin-bottom: 6mm; display: grid; grid-template-columns: auto 1fr; gap: 5mm; align-items: center; }
+.golden-time { font-family: Georgia, serif; font-size: 22pt; color: #b8d4c5; font-style: italic; line-height: 1; border-right: 1px solid #4a6a64; padding-right: 5mm; }
+.golden-text { font-size: 10pt; line-height: 1.4; }
+.golden-text em { color: #b8d4c5; font-style: italic; }
+/* Five baskets */
+.baskets { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3mm; margin-bottom: 7mm; }
+.basket { background: #fff; border: 1px solid #b8d4c5; padding: 4mm 3mm; text-align: center; }
+.basket-icon { font-size: 22pt; color: #5a8a7a; line-height: 1; margin-bottom: 2mm; }
+.basket-name { font-size: 9pt; color: #1f3a36; font-weight: 600; line-height: 1.2; }
+/* Calendar */
+.calendar { background: #fff; border: 1px solid #b8d4c5; padding: 6mm; margin-bottom: 4mm; }
+.calendar-title { text-align: center; font-size: 8pt; letter-spacing: 3pt; color: #5a8a7a; margin-bottom: 4mm; }
+.calendar-sub { text-align: center; font-style: italic; font-size: 9pt; color: #5a8a7a; margin-bottom: 5mm; font-family: Georgia, serif; }
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2mm; }
+.day { text-align: center; padding: 3mm 1mm; background: #eef5f1; border-radius: 2mm; }
+.day-name { font-size: 7pt; letter-spacing: 1.5pt; color: #5a8a7a; text-transform: uppercase; margin-bottom: 2mm; }
+.day-load { font-family: Georgia, serif; font-size: 9.5pt; color: #1f3a36; font-style: italic; line-height: 1.2; }
+.day.special .day-load { color: #a8723a; font-weight: 600; }
+.daily-mixed { text-align: center; margin-top: 4mm; padding-top: 4mm; border-top: 1px dashed #b8d4c5; font-size: 9pt; color: #1f3a36; }
+.daily-mixed strong { color: #5a8a7a; font-family: Georgia, serif; font-style: italic; font-weight: 400; }
+.flow { background: #fff; padding: 5mm; border-left: 3px solid #5a8a7a; }
+.flow-title { font-size: 8pt; letter-spacing: 3pt; color: #5a8a7a; margin-bottom: 3mm; text-transform: uppercase; }
+.flow-steps { display: flex; align-items: center; gap: 3mm; font-size: 9.5pt; }
+.flow-step { font-family: Georgia, serif; font-style: italic; color: #1f3a36; }
+.flow-arrow { color: #5a8a7a; font-size: 12pt; }
+/* Page 2: Four zones + closing */
+.zones-page-header { font-family: Georgia, serif; font-size: 26pt; color: #1f3a36; font-weight: 300; line-height: 1; margin-bottom: 2mm; }
+.zones-page-header em { color: #5a8a7a; font-style: italic; }
+.zones-page-sub { font-style: italic; color: #5a8a7a; font-size: 10.5pt; padding-bottom: 5mm; border-bottom: 1px solid #b8d4c5; margin-bottom: 7mm; }
+.zone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-bottom: 7mm; }
+.zone { background: #fff; padding: 5mm; border-top: 2px solid #5a8a7a; }
+.zone-icon { font-size: 26pt; color: #5a8a7a; line-height: 1; margin-bottom: 2mm; }
+.zone-name { font-family: Georgia, serif; font-size: 14pt; color: #1f3a36; margin-bottom: 1mm; font-style: italic; }
+.zone-tag { font-size: 7pt; letter-spacing: 2pt; color: #5a8a7a; text-transform: uppercase; padding-bottom: 3mm; border-bottom: 1px dotted #c5d8cc; margin-bottom: 3mm; }
+.zone-items { font-size: 9pt; line-height: 1.55; color: #1f3a36; }
+.silhouette-rule { background: #1f3a36; color: #eef5f1; padding: 4mm 5mm; margin-bottom: 6mm; text-align: center; font-family: Georgia, serif; font-size: 13pt; font-style: italic; line-height: 1.3; }
+.silhouette-rule em { color: #b8d4c5; font-style: normal; font-weight: 600; }
+.checklist { background: #5a8a7a; color: #fff; padding: 5mm; }
+.checklist-title { font-size: 8pt; letter-spacing: 3pt; margin-bottom: 4mm; text-align: center; }
+.checks { display: flex; justify-content: space-around; }
+.check { text-align: center; }
+.tick { font-size: 18pt; color: #b8d4c5; display: block; margin-bottom: 1mm; }
+.check-label { font-size: 8.5pt; }
+.footer { position: absolute; bottom: 10mm; left: 16mm; right: 16mm; text-align: center; font-style: italic; font-size: 9pt; color: #5a8a7a; letter-spacing: 1pt; }
+</style></head>
+<body>
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="eyebrow">The Natural Order — Space of Care</div>
+  <h1>The <em>Laundry</em></h1>
+  <div class="tagline">Sort it · Wash it · Hang it · Home</div>
+
+  <div class="golden">
+    <div class="golden-time">08:00<br>21:00</div>
+    <div class="golden-text">Live from <em>08:00 to 21:00.</em> By 21:00 every machine is off and unloaded, every tool back on its silhouette. <em>Entry is via the Laundryman or Laundrywoman on duty.</em></div>
+  </div>
+
+  <div class="section-tag">— THE FIVE BASKETS —</div>
+  <div class="baskets">
+    <div class="basket"><div class="basket-icon">≋</div><div class="basket-name">Towels<br>&amp; Beddings</div></div>
+    <div class="basket"><div class="basket-icon">◯</div><div class="basket-name">Whites</div></div>
+    <div class="basket"><div class="basket-icon">❀</div><div class="basket-name">Wool</div></div>
+    <div class="basket"><div class="basket-icon">◐</div><div class="basket-name">Mixed</div></div>
+    <div class="basket"><div class="basket-icon">◇</div><div class="basket-name">Underwear</div></div>
+  </div>
+
+  <div class="calendar">
+    <div class="calendar-title">— THE WASH CALENDAR —</div>
+    <div class="calendar-sub">A Mixed wash runs every morning. The evening load is set below.</div>
+    <div class="days">
+      <div class="day"><div class="day-name">Mon</div><div class="day-load">Whites</div></div>
+      <div class="day"><div class="day-name">Tue</div><div class="day-load">Socks &amp;<br>Underwear</div></div>
+      <div class="day"><div class="day-name">Wed</div><div class="day-load">Towels</div></div>
+      <div class="day"><div class="day-name">Thu</div><div class="day-load">Whites</div></div>
+      <div class="day"><div class="day-name">Fri</div><div class="day-load">Socks &amp;<br>Underwear</div></div>
+      <div class="day"><div class="day-name">Sat</div><div class="day-load">Towels</div></div>
+      <div class="day special"><div class="day-name">Sun</div><div class="day-load">Wool</div></div>
+    </div>
+    <div class="daily-mixed">Every morning, regardless of day: <strong>a Mixed wash runs.</strong></div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-title">— FROM HAMPER TO HANGER —</div>
+    <div class="flow-steps">
+      <div class="flow-step">Sort to basket</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Load machine</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Iron after cycle</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Store on hanger</div>
+    </div>
+  </div>
+
+  <div class="footer">— page one —</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="eyebrow">The Laundry — Where Every Tool Lives</div>
+  <div class="zones-page-header">The <em>Cupboards</em></div>
+  <div class="zones-page-sub">Four zones · Every tool has a silhouette · Match it back</div>
+
+  <div class="zone-grid">
+    <div class="zone">
+      <div class="zone-icon">◌</div>
+      <div class="zone-name">Washing Zone</div>
+      <div class="zone-tag">— ZONE I —</div>
+      <div class="zone-items">Washing Machines · Detergent · Fabric Softener · Stain Remover</div>
+    </div>
+    <div class="zone">
+      <div class="zone-icon">▱</div>
+      <div class="zone-name">Ironing Zone</div>
+      <div class="zone-tag">— ZONE II —</div>
+      <div class="zone-items">Hand Iron · Steamer · Fold-up Ironing Board</div>
+    </div>
+    <div class="zone">
+      <div class="zone-icon">❋</div>
+      <div class="zone-name">Enhancement Zone</div>
+      <div class="zone-tag">— ZONE III —</div>
+      <div class="zone-items">Fabric Shaver · Fabric Mist · Sachets · Humidifier</div>
+    </div>
+    <div class="zone">
+      <div class="zone-icon">⌖</div>
+      <div class="zone-name">Cleaning Zone</div>
+      <div class="zone-tag">— ZONE IV —</div>
+      <div class="zone-items">Hoover · Robot Vacuum · Mop · Brushes · Sprays</div>
+    </div>
+  </div>
+
+  <div class="silhouette-rule">Every tool returns to its <em>designated silhouette.</em><br>Ironing board folded · Dry-rack deconstructed · Baskets to printed labels.</div>
+
+  <div class="checklist">
+    <div class="checklist-title">— THE LAUNDRY IS AT REST WHEN —</div>
+    <div class="checks">
+      <div class="check"><span class="tick">✓</span><div class="check-label">Machines unloaded</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Baskets labelled</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Tools on silhouettes</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Cupboards closed</div></div>
+    </div>
+  </div>
+
+  <div class="footer">Sort it · Wash it · Hang it · Home</div>
+</div>
+</body></html>

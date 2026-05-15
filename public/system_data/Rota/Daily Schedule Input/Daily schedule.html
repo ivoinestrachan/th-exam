@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Collective Rota — Daily schedule</title>
+<style>
+  @page { size: A3 landscape; margin: 8mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #EDE4C9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1F1B14; }
+  .poster {
+    background: #FAF3E0;
+    max-width: 1500px;
+    margin: 16px auto;
+    padding: 18px 20px 14px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #C4B998;
+    margin-bottom: 14px;
+    gap: 24px;
+  }
+  .eyebrow { font-size: 10px; letter-spacing: 0.22em; color: #5C5340; font-weight: 600; margin-bottom: 4px; }
+  .title { font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -0.01em; }
+  .subtitle { font-size: 11px; color: #5C5340; margin-top: 5px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; align-items: center; padding-bottom: 4px; max-width: 540px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    align-items: stretch;
+  }
+  .day-col { display: flex; flex-direction: column; gap: 5px; }
+  .day-head { text-align: center; padding: 0 0 6px; }
+  .day-name { font-weight: 700; font-size: 14px; }
+  .day-short { font-size: 8.5px; letter-spacing: 0.2em; color: #7A6E50; margin-top: 2px; font-weight: 500; }
+
+  .marker {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 9px; font-weight: 600; color: #7A6E50;
+    letter-spacing: 0.04em; padding: 3px 6px;
+    background: rgba(196, 185, 152, 0.18); border-radius: 4px;
+  }
+  .marker .dot { width: 5px; height: 5px; border-radius: 50%; background: #7A6E50; flex-shrink: 0; }
+  .marker .lbl { text-transform: uppercase; }
+  .marker .time { margin-left: auto; font-weight: 700; color: #5C5340; }
+
+  .ev {
+    border-radius: 6px; padding: 6px 7px 7px;
+    font-size: 10px; line-height: 1.35;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .ev-head { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .ev-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; }
+  .ev-body { font-size: 10.5px; font-weight: 500; }
+  .pill {
+    color: #fff; font-size: 8.5px; font-weight: 600;
+    padding: 2px 5px; border-radius: 3px;
+    letter-spacing: 0.02em; line-height: 1.2;
+    white-space: nowrap; display: inline-block;
+  }
+  .mini-pill {
+    font-size: 7.5px; padding: 1px 4px; flex-shrink: 0;
+  }
+
+  /* Push the closing Sleep marker to the bottom of every column so all
+     columns end on the same line regardless of mid-day content density. */
+  .day-col .marker:last-of-type { margin-top: auto; }
+
+  .slot {
+    background: #F1E8CA; border: 1px solid #DDD0A6;
+    border-radius: 7px; padding: 6px 6px 7px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .slot-head {
+    display: flex; align-items: center; gap: 5px;
+    padding: 1px 2px 4px;
+    border-bottom: 1px dashed #C4B998; margin-bottom: 1px;
+  }
+  .slot-num {
+    background: #5C5340; color: #FAF3E0;
+    font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em;
+  }
+  .slot-time { font-size: 9.5px; font-weight: 700; color: #3D3625; letter-spacing: 0.02em; }
+
+  .sub {
+    border-radius: 5px; padding: 4px 6px 5px;
+    font-size: 9.5px; line-height: 1.35;
+  }
+  .sub-label {
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.07em;
+    margin-bottom: 2px; display: block;
+  }
+  .row { display: flex; align-items: baseline; gap: 4px; margin-top: 2px; }
+  .row-text { flex: 1; min-width: 0; }
+  em { font-style: italic; opacity: 0.85; font-weight: 500; }
+
+  .assign {
+    display: inline-flex; align-items: center;
+    white-space: nowrap; font-size: 9px;
+    opacity: 0.6; margin-left: 3px;
+  }
+  .assign::before { content: "("; margin-right: 1px; }
+  .assign::after { content: ")"; margin-left: 1px; }
+  .assign-line {
+    display: inline-block; width: 42px;
+    border-bottom: 1px dotted currentColor; height: 0.85em;
+  }
+
+  .mv  { background: #B8DDD4; color: #1F5448; } .mv-pill  { background: #2E6F5B; }
+  .mv-rest { background: #DCEBE5; color: #5A7E73; }
+  .cl  { background: #D8E6F1; color: #2A4860; } .cl-pill  { background: #3F5C75; }
+  .sp  { background: #D8E5C5; color: #364D1E; } .sp-pill  { background: #3F5C28; }
+  .ck  { background: #EFD685; color: #5A4710; } .ck-pill  { background: #7A6019; }
+  .pr  { background: #D8C8EA; color: #3D2A65; } .pr-pill  { background: #5A4488; }
+  .ln  { background: #EDB8B3; color: #6E2520; } .ln-pill  { background: #8A3A35; }
+  .rs  { background: #D2C5A4; color: #4D4128; } .rs-pill  { background: #6F6243; }
+
+  .footer {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px;
+    margin-top: 14px; padding-top: 10px; border-top: 1px solid #C4B998;
+  }
+  .key { display: flex; gap: 7px; align-items: flex-start; }
+  .key-letter {
+    width: 20px; height: 20px; border-radius: 4px;
+    font-weight: 700; font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; line-height: 1;
+  }
+  .key-name { font-weight: 700; font-size: 11px; margin-bottom: 1px; }
+  .key-desc { color: #5C5340; font-size: 9.5px; line-height: 1.4; }
+  .key-letter.slot-key { background: #5C5340; color: #FAF3E0; }
+
+  @media print {
+    body { background: #FAF3E0; }
+    .poster { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">COLLECTIVE ROTA</div>
+      <div class="title">Daily schedule</div>
+      <div class="subtitle">Wake 7:00 AM · Sleep cutoff 12:00 AM · Slot 1 &amp; Slot 2 await name allocation</div>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="swatch" style="background:#B8DDD4;"></span>Movement</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8E6F1;"></span>Cleaning</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8E5C5;"></span>Supplies</span>
+      <span class="legend-item"><span class="swatch" style="background:#EFD685;"></span>Cooking</span>
+      <span class="legend-item"><span class="swatch" style="background:#D8C8EA;"></span>Procurement</span>
+      <span class="legend-item"><span class="swatch" style="background:#EDB8B3;"></span>Laundry</span>
+      <span class="legend-item"><span class="swatch" style="background:#D2C5A4;"></span>Reset</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- MONDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Monday</div><div class="day-short">MON</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv"><div class="ev-head"><span class="ev-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><div class="ev-body">Lower Body</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Bathrooms</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Symposium</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Kitchen, Forge</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Whites</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- TUESDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Tuesday</div><div class="day-short">TUE</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv"><div class="ev-head"><span class="ev-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><div class="ev-body">Core &amp; Stability</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Atrium</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Zen Room</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Studio</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Girl's Bathroom</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Bathroom, Laundry, Zen Room</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev pr"><div class="ev-head"><span class="ev-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><div class="ev-body">Create basket · Place orders · Pick up orders</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Socks &amp; underwear</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- WEDNESDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Wednesday</div><div class="day-short">WED</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv mv-rest"><div class="ev-head"><span class="ev-label">MOVEMENT</span></div><div class="ev-body">Rest day · light walking or stretching</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Bathrooms</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Forge</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Closet</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Kitchen, Tech Room</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Towels</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- THURSDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Thursday</div><div class="day-short">THU</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv"><div class="ev-head"><span class="ev-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><div class="ev-body">Upper Body</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Tech Room</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Zen Room</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Girl's Bathroom</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Bathroom, Symposium</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev pr"><div class="ev-head"><span class="ev-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><div class="ev-body">Create basket · Place orders · Pick up orders</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Whites</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- FRIDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Friday</div><div class="day-short">FRI</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv"><div class="ev-head"><span class="ev-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><div class="ev-body">Full Body &amp; Community</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Bathrooms</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Symposium</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Forge</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Kitchen, Laundry, Closet</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Socks &amp; underwear</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- SATURDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Saturday</div><div class="day-short">SAT</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv"><div class="ev-head"><span class="ev-label">MOVEMENT</span><span class="pill mv-pill">7:45–9 AM</span></div><div class="ev-body">Skill Lab</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Atrium</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Zen Room</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Studio</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Girl's Bathroom</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Bathroom, Atrium</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev pr"><div class="ev-head"><span class="ev-label">PROCUREMENT</span><span class="pill pr-pill">2–5 PM</span></div><div class="ev-body">Create basket · Place orders · Pick up orders</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Towels</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+    <!-- SUNDAY -->
+    <div class="day-col">
+      <div class="day-head"><div class="day-name">Sunday</div><div class="day-short">SUN</div></div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Wake</span><span class="time">7:00 AM</span></div>
+      <div class="ev mv mv-rest"><div class="ev-head"><span class="ev-label">MOVEMENT</span></div><div class="ev-body">Rest day · full recovery</div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">8:45–10:30 AM</span></div><div class="row"><span class="row-text">Breakfast</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 1</span><span class="slot-time">9–10 AM</span></div>
+        <div class="sub cl"><span class="sub-label">CLEAN</span>
+          <div class="row"><span class="row-text">Kitchen</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Bathrooms</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Tech Room</span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="row-text">Forge</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub sp"><span class="sub-label">SUPPLIES</span>
+          <div class="row"><span class="row-text">Kitchen, Studio</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Mixed</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">3–6 PM</span></div><div class="row"><span class="row-text">Weekly meal prep</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="ev ck"><div class="ev-head"><span class="ev-label">COOKING</span><span class="pill ck-pill">6–8 PM</span></div><div class="row"><span class="row-text">Dinner</span><span class="assign"><span class="assign-line"></span></span></div></div>
+      <div class="slot">
+        <div class="slot-head"><span class="slot-num">SLOT 2</span><span class="slot-time">9–10:30 PM</span></div>
+        <div class="sub rs"><span class="sub-label">RESET</span>
+          <div class="row"><span class="row-text">Reset rooms <em>10 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+          <div class="row"><span class="pill rs-pill mini-pill">10 PM</span><span class="row-text">Sleeping room setup <em>25 min</em></span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+        <div class="sub ln"><span class="sub-label">LAUNDRY</span>
+          <div class="row"><span class="row-text">Wool</span><span class="assign"><span class="assign-line"></span></span></div>
+        </div>
+      </div>
+      <div class="marker"><span class="dot"></span><span class="lbl">Sleep</span><span class="time">12:00 AM</span></div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="key"><div class="key-letter slot-key">S1</div><div><div class="key-name">Slot 1 · 9–10 AM</div><div class="key-desc">Cleaning, supplies, morning laundry. One name per cleaning room. Supplies = one name. Laundry = one name.</div></div></div>
+    <div class="key"><div class="key-letter slot-key">S2</div><div><div class="key-name">Slot 2 · 9–10:30 PM</div><div class="key-desc">Reset rooms (9 PM), sleeping setup (10 PM), evening laundry. One name per task.</div></div></div>
+    <div class="key"><div class="key-letter mv">M</div><div><div class="key-name">Movement</div><div class="key-desc">Daily group calisthenics. 10 min warm-up, 20 min jog, then circuit.</div></div></div>
+    <div class="key"><div class="key-letter cl">C</div><div><div class="key-name">Cleaning</div><div class="key-desc">Work each room top to bottom per the manual. Tick off only when done to standard.</div></div></div>
+    <div class="key"><div class="key-letter sp">S</div><div><div class="key-name">Supplies</div><div class="key-desc">Walk listed rooms with the supply list. Restock and log. Alert if bulk supply low.</div></div></div>
+    <div class="key"><div class="key-letter ck">K</div><div><div class="key-name">Cooking</div><div class="key-desc">Cook the meal from the meal set, then clean the kitchen thoroughly within the slot.</div></div></div>
+    <div class="key"><div class="key-letter pr">P</div><div><div class="key-name">Procurement</div><div class="key-desc">Create basket, place orders, pick up orders.</div></div></div>
+    <div class="key"><div class="key-letter ln">L</div><div><div class="key-name">Laundry</div><div class="key-desc">Two loads daily. Morning Mixed; evening labelled. Wash, dry, fold, return.</div></div></div>
+  </div>
+
+</div>
+</body>
+</html>

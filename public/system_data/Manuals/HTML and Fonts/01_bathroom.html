@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1a3a4a; background: #f4f9fb; width: 210mm; height: 297mm; padding: 18mm 16mm; position: relative; overflow: hidden; }
+body::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 6mm; background: linear-gradient(90deg, #b8dde8 0%, #6fb3cf 50%, #b8dde8 100%); }
+.eyebrow { font-size: 8pt; letter-spacing: 4pt; color: #6fb3cf; text-transform: uppercase; margin-bottom: 4mm; }
+h1 { font-family: Georgia, serif; font-weight: 300; font-size: 44pt; letter-spacing: -1pt; line-height: 0.95; color: #1a3a4a; }
+h1 em { font-style: italic; color: #6fb3cf; }
+.tagline { font-style: italic; color: #5a8a9c; font-size: 11pt; margin-top: 3mm; margin-bottom: 8mm; border-bottom: 1px solid #c5dde5; padding-bottom: 6mm; }
+.golden { background: #fff; border-left: 3px solid #6fb3cf; padding: 5mm 6mm; margin-bottom: 7mm; display: flex; gap: 6mm; align-items: center; }
+.golden-icon { font-size: 22pt; color: #6fb3cf; }
+.golden-text { font-family: Georgia, serif; font-size: 13pt; line-height: 1.35; color: #1a3a4a; }
+.golden-text strong { font-style: italic; }
+.flow { display: flex; justify-content: space-between; gap: 4mm; margin-bottom: 8mm; }
+.flow-step { flex: 1; text-align: center; }
+.flow-num { width: 11mm; height: 11mm; border: 1.5px solid #6fb3cf; border-radius: 50%; line-height: 11mm; font-family: Georgia, serif; font-size: 13pt; color: #6fb3cf; margin: 0 auto 2mm; background: #fff; }
+.flow-label { font-size: 7.5pt; letter-spacing: 1.5pt; text-transform: uppercase; color: #5a8a9c; }
+.flow-arrow { color: #c5dde5; font-size: 14pt; align-self: center; padding-top: 3mm;}
+.zones-header { font-size: 8pt; letter-spacing: 4pt; text-transform: uppercase; color: #6fb3cf; margin-bottom: 4mm; padding-top: 2mm; }
+.zones { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-bottom: 8mm; }
+.zone { background: #fff; padding: 5mm; border-top: 2px solid #6fb3cf; }
+.zone-letter { font-family: Georgia, serif; font-size: 26pt; color: #6fb3cf; line-height: 1; }
+.zone-name { font-weight: 600; font-size: 11pt; margin-top: 1mm; margin-bottom: 4mm; color: #1a3a4a; }
+.zone-rules { list-style: none; font-size: 8.5pt; line-height: 1.5; color: #2a4a5a; }
+.zone-rules li { padding-left: 5mm; position: relative; margin-bottom: 1.5mm; }
+.zone-rules li::before { content: '→'; position: absolute; left: 0; color: #6fb3cf; }
+.checklist { background: #1a3a4a; color: #fff; padding: 6mm 5mm; border-radius: 0; }
+.checklist-title { font-size: 8pt; letter-spacing: 4pt; text-transform: uppercase; color: #b8dde8; margin-bottom: 4mm; text-align: center; }
+.checks { display: flex; justify-content: space-around; }
+.check { text-align: center; flex: 1; }
+.tick { font-size: 18pt; color: #b8dde8; display: block; margin-bottom: 1mm; }
+.check-label { font-size: 8.5pt; letter-spacing: 1pt; }
+.footer { position: absolute; bottom: 12mm; left: 16mm; right: 16mm; text-align: center; font-style: italic; font-size: 9pt; color: #6fb3cf; letter-spacing: 1pt; }
+.footer span { padding: 0 4mm; }
+</style></head>
+<body>
+  <div class="eyebrow">A Manual of the Natural Order</div>
+  <h1>The <em>Bathroom</em></h1>
+  <div class="tagline">Use with intent · Reset completely · Exit clean</div>
+
+  <div class="golden">
+    <div class="golden-icon">◐</div>
+    <div class="golden-text"><strong>Clean what you affect.</strong> No exceptions. No "I'll get it later." No trace of prior use.</div>
+  </div>
+
+  <div class="zones-header">— Entry &amp; Exit —</div>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-label">Enter</div></div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-label">Slippers on</div></div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-label">Use zone</div></div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-label">Reset</div></div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-label">Slippers home</div></div>
+  </div>
+
+  <div class="zones-header">— Three Zones —</div>
+  <div class="zones">
+    <div class="zone">
+      <div class="zone-letter">A</div>
+      <div class="zone-name">The Sink</div>
+      <ul class="zone-rules">
+        <li>Rinse residue away</li>
+        <li>Wipe stubborn spots</li>
+        <li>Dry hands on the towel</li>
+        <li>Sink visually clean</li>
+      </ul>
+    </div>
+    <div class="zone">
+      <div class="zone-letter">B</div>
+      <div class="zone-name">The Toilet</div>
+      <ul class="zone-rules">
+        <li>Wipe seat with wet wipe</li>
+        <li>Brush bowl until clean</li>
+        <li>Bin the wipe below</li>
+        <li>Ready for next user</li>
+      </ul>
+    </div>
+    <div class="zone">
+      <div class="zone-letter">C</div>
+      <div class="zone-name">The Shower</div>
+      <ul class="zone-rules">
+        <li>Rinse everything to drain</li>
+        <li>Clear the drain filter</li>
+        <li>Squeegee the glass</li>
+        <li>Hang towel fully open</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">— The Bathroom is Ready When —</div>
+    <div class="checks">
+      <div class="check"><span class="tick">✓</span><div class="check-label">Sink clear</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Toilet clean</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Glass squeegeed</div></div>
+      <div class="check"><span class="tick">✓</span><div class="check-label">Tools at home</div></div>
+    </div>
+  </div>
+
+  <div class="footer"><span>Use with intent</span>·<span>Clean what you affect</span>·<span>Reset completely</span>·<span>Exit clean</span></div>
+</body></html>

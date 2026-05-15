@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+@font-face { font-family: 'Fraunces'; src: url('fonts/Fraunces-300.woff2') format('woff2'); font-weight: 300; font-style: normal; }
+@font-face { font-family: 'Fraunces'; src: url('fonts/Fraunces-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'Fraunces'; src: url('fonts/Fraunces-500.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+@font-face { font-family: 'Fraunces'; src: url('fonts/Fraunces-400i.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+@font-face { font-family: 'Fraunces'; src: url('fonts/Fraunces-500i.woff2') format('woff2'); font-weight: 500; font-style: italic; }
+@font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/Jakarta-400.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/Jakarta-500.woff2') format('woff2'); font-weight: 500; }
+@font-face { font-family: 'Plus Jakarta Sans'; src: url('fonts/Jakarta-600.woff2') format('woff2'); font-weight: 600; }
+
+:root {
+  --bg: #f0e6d6;
+  --bg-card: #f6efe1;
+  --ink: #3a2f20;
+  --ink-soft: #6a5a40;
+  --rule: rgba(58,47,32,0.16);
+  --accent: #8a6a3a;
+  --accent-pale: #d4c098;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); color: var(--ink); background: var(--bg-card); width: 210mm; height: 297mm; padding: 6mm 13mm 6mm; position: relative; overflow: hidden; }
+
+.header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5mm; padding-bottom: 2.5mm; border-bottom: 1px solid var(--rule); }
+.eyebrow { font-family: var(--sans); font-size: 8.5pt; letter-spacing: 5pt; color: var(--accent); text-transform: uppercase; margin-bottom: 3mm; font-weight: 500; }
+h1 { font-family: var(--serif); font-weight: 300; font-size: 28pt; line-height: 1; color: var(--ink); letter-spacing: -0.5pt; }
+h1 em { font-style: italic; color: var(--accent); }
+.tagline { font-family: var(--serif); font-style: italic; font-size: 10.5pt; color: var(--ink-soft); text-align: right; max-width: 75mm; line-height: 1.4; }
+
+.guiding-rule { background: var(--bg); border-radius: 3mm; padding: 2.5mm 5mm; margin-bottom: 3mm; display: flex; align-items: center; gap: 5mm; position: relative; }
+.guiding-rule .label { font-family: var(--sans); font-size: 7.5pt; font-weight: 600; letter-spacing: 2.5pt; color: var(--accent); text-transform: uppercase; flex-shrink: 0; padding-right: 5mm; border-right: 1px solid var(--accent); }
+.guiding-rule p { font-family: var(--serif); font-style: italic; font-size: 11.5pt; line-height: 1.4; color: var(--ink); }
+.guiding-rule p em { font-style: normal; font-weight: 500; color: var(--accent); }
+
+.zone-row { display: flex; gap: 6mm; margin-bottom: 1mm; padding-bottom: 1mm; border-bottom: 1px solid var(--rule); }
+.zone-row:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 2mm; }
+.zone-row.right .zone-diagram { order: 2; }
+.zone-row.right .zone-content { order: 1; }
+
+.zone-diagram { width: 60mm; flex-shrink: 0; }
+.zone-content { flex: 1; display: flex; flex-direction: column; gap: 1.5mm; }
+
+.diagram { position: relative; width: 100%; height: 44mm; border-radius: 4mm; overflow: hidden; background: #ddd; box-shadow: 0 2px 6px rgba(58,47,32,0.08); }
+.diagram img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.zone-box { position: absolute; border: 2px solid; border-radius: 6px; pointer-events: none; }
+.zone-pin { position: absolute; width: 6mm; height: 6mm; border-radius: 50%; color: white; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 9.5pt; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.25); }
+.c-A { background: #c4862e; border-color: #c4862e; }
+.c-B { background: #3d8a73; border-color: #3d8a73; }
+.c-C { background: #6a5aa3; border-color: #6a5aa3; }
+.c-D { background: #b34a73; border-color: #b34a73; }
+.c-A.zone-box, .c-B.zone-box, .c-C.zone-box, .c-D.zone-box { background: transparent; }
+
+.zone-title-block { margin-bottom: 1mm; }
+.zone-num { font-family: var(--sans); font-size: 8pt; font-weight: 500; letter-spacing: 3pt; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5mm; }
+.zone-row h2 { font-family: var(--serif); font-weight: 300; font-size: 18pt; line-height: 1; color: var(--ink); letter-spacing: -0.3pt; }
+.zone-row h2 em { font-style: italic; color: var(--accent); }
+.zone-deck { font-family: var(--serif); font-style: italic; font-size: 10pt; color: var(--ink-soft); margin-top: 1.5mm; line-height: 1.3; }
+
+.zones-key { display: flex; flex-direction: column; gap: 1.2mm; }
+.zone-key-row { display: flex; align-items: center; gap: 3mm; font-size: 9pt; line-height: 1.35; }
+.key-pin { flex-shrink: 0; width: 5.2mm; height: 5.2mm; border-radius: 50%; color: white; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 8.5pt; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.key-text strong { font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--ink); font-size: 9.5pt; }
+.key-text span { color: var(--ink-soft); font-size: 8.5pt; }
+
+.do-dont { display: flex; gap: 4mm; margin-top: 2mm; }
+.do-dont .cell { flex: 1; padding: 2.5mm 4mm; background: var(--bg); border-radius: 2.5mm; }
+.do-dont .cell.do { border-left: 2.5px solid #5a8a3a; }
+.do-dont .cell.dont { border-left: 2.5px solid #b8523a; }
+.do-dont .cell-label { font-family: var(--sans); font-size: 7.5pt; font-weight: 600; letter-spacing: 2.5pt; text-transform: uppercase; margin-bottom: 1.5mm; }
+.do-dont .cell.do .cell-label { color: #5a8a3a; }
+.do-dont .cell.dont .cell-label { color: #b8523a; }
+.do-dont .cell-text { font-family: var(--serif); font-size: 9pt; line-height: 1.4; color: var(--ink); }
+
+.checklist { background: var(--ink); color: var(--bg-card); padding: 3mm 6mm; border-radius: 3mm; box-shadow: 0 2px 6px rgba(58,47,32,0.12); display: flex; align-items: center; gap: 6mm; }
+.checklist-title { font-family: var(--sans); font-size: 7.5pt; font-weight: 600; letter-spacing: 3pt; color: var(--accent-pale); text-transform: uppercase; flex-shrink: 0; padding-right: 5mm; border-right: 1px solid rgba(212,192,152,0.3); }
+.checklist-row { flex: 1; display: flex; justify-content: space-around; gap: 4mm; }
+.check { display: flex; align-items: center; gap: 2mm; }
+.tick { font-size: 11pt; color: var(--accent-pale); line-height: 1; }
+.check-label { font-family: var(--serif); font-style: italic; font-size: 9.5pt; letter-spacing: 0.2pt; }
+
+/* Zone III special colors — A,B grey; D orange */
+.z3-A { background: #6e6660; border-color: #6e6660; border-style: dashed; }
+.z3-B { background: #6e6660; border-color: #6e6660; border-style: dashed; }
+.z3-D { background: #c4862e; border-color: #c4862e; }
+.z3-A.zone-box, .z3-B.zone-box, .z3-D.zone-box { background: transparent; }
+.z3-A.zone-pin, .z3-B.zone-pin, .z3-D.zone-pin { color: white; }
+
+.key-pin.z3-A, .key-pin.z3-B { background: #6e6660; }
+.key-pin.z3-D { background: #c4862e; }
+</style></head>
+<body>
+
+<div class="header-row">
+  <div>
+    <div class="eyebrow">Telos House — Space of Garments</div>
+    <h1>The <em>Wardrobe</em> Manual</h1>
+  </div>
+  <div class="tagline">Three zones · A guide to where things live</div>
+</div>
+
+<div class="guiding-rule">
+  <div class="label">— THE RULE —</div>
+  <p>Larger sizes <em>above.</em> Smaller sizes <em>below.</em> Fresh laundry returns to its size.</p>
+</div>
+
+<!-- Zone I — diagram LEFT -->
+<div class="zone-row left">
+  <div class="zone-diagram">
+    <div class="diagram">
+      <img src="wardrobe_assets/zone1_rails.jpg" alt="Hanging rails">
+      <div class="zone-box c-A" style="top:33%;bottom:49%;left:20%;right:22%;"></div>
+      <div class="zone-pin c-A" style="top:38%;left:6%;">A</div>
+      <div class="zone-box c-B" style="top:53%;bottom:22%;left:20%;right:22%;"></div>
+      <div class="zone-pin c-B" style="top:65%;left:6%;">B</div>
+    </div>
+  </div>
+  <div class="zone-content">
+    <div class="zone-title-block">
+      <div class="zone-num">— Zone I —</div>
+      <h2>The Hanging <em>Rails</em></h2>
+      <div class="zone-deck">Tops &amp; trousers, sorted by size.</div>
+    </div>
+    <div class="zones-key">
+      <div class="zone-key-row"><div class="key-pin c-A">A</div><div class="key-text"><strong>Top rail · L &amp; XL.</strong> <span>Large &amp; extra-large garments.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin c-B">B</div><div class="key-text"><strong>Bottom rail · S &amp; M.</strong> <span>Small &amp; medium garments.</span></div></div>
+    </div>
+    <div class="do-dont">
+      <div class="cell do"><div class="cell-label">— Do —</div><div class="cell-text">Hang every garment on the rail of its size.</div></div>
+      <div class="cell dont"><div class="cell-label">— Don't —</div><div class="cell-text">Drape, pile, or leave on the floor.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Zone II — diagram RIGHT -->
+<div class="zone-row right">
+  <div class="zone-diagram">
+    <div class="diagram">
+      <img src="wardrobe_assets/zone2_jumpers.jpg" alt="Jumper cabinet">
+      <div class="zone-box c-A" style="top:24%;bottom:60%;left:33%;right:41%;"></div>
+      <div class="zone-pin c-A" style="top:30%;left:60%;">A</div>
+      <div class="zone-box c-B" style="top:42%;bottom:50%;left:33%;right:41%;"></div>
+      <div class="zone-pin c-B" style="top:43%;left:60%;">B</div>
+      <div class="zone-box c-C" style="top:53%;bottom:40%;left:33%;right:41%;"></div>
+      <div class="zone-pin c-C" style="top:53%;left:60%;">C</div>
+      <div class="zone-box c-D" style="top:63%;bottom:13%;left:33%;right:41%;"></div>
+      <div class="zone-pin c-D" style="top:69%;left:60%;">D</div>
+    </div>
+  </div>
+  <div class="zone-content">
+    <div class="zone-title-block">
+      <div class="zone-num">— Zone II —</div>
+      <h2>The Jumper <em>Cabinet</em></h2>
+      <div class="zone-deck">Pull-out racks for jumpers · Belts &amp; underwear below.</div>
+    </div>
+    <div class="zones-key">
+      <div class="zone-key-row"><div class="key-pin c-A">A</div><div class="key-text"><strong>Upper rack.</strong> <span>L &amp; XL jumpers, folded flat.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin c-B">B</div><div class="key-text"><strong>Lower rack.</strong> <span>S &amp; M jumpers, folded flat.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin c-C">C</div><div class="key-text"><strong>Belts drawer.</strong> <span>Coiled or laid flat.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin c-D">D</div><div class="key-text"><strong>Bottom drawers.</strong> <span>Socks &amp; underwear, paired.</span></div></div>
+    </div>
+    <div class="do-dont">
+      <div class="cell do"><div class="cell-label">— Do —</div><div class="cell-text">Fold jumpers flat on the rack of their size.</div></div>
+      <div class="cell dont"><div class="cell-label">— Don't —</div><div class="cell-text">Pile loose or overstuff drawers.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Zone III — diagram LEFT -->
+<div class="zone-row left">
+  <div class="zone-diagram">
+    <div class="diagram">
+      <img src="wardrobe_assets/zone3_shoes.jpg" alt="Accessory and shoe cabinet">
+      <div class="zone-box z3-A" style="top:17%;bottom:75%;left:50%;right:32%;"></div>
+      <div class="zone-pin z3-A" style="top:19%;left:72%;">A</div>
+      <div class="zone-box z3-B" style="top:26%;bottom:65%;left:50%;right:32%;"></div>
+      <div class="zone-pin z3-B" style="top:30%;left:72%;">B</div>
+      <div class="zone-box c-C" style="top:38%;bottom:55%;left:50%;right:32%;"></div>
+      <div class="zone-pin c-C" style="top:41%;left:72%;">C</div>
+      <div class="zone-box z3-D" style="top:50%;bottom:13%;left:50%;right:32%;"></div>
+      <div class="zone-pin z3-D" style="top:65%;left:72%;">D</div>
+    </div>
+  </div>
+  <div class="zone-content">
+    <div class="zone-title-block">
+      <div class="zone-num">— Zone III —</div>
+      <h2>The Accessory &amp; <em>Shoe</em> Cabinet</h2>
+      <div class="zone-deck">Storage above · Watches mid · Shoes below.</div>
+    </div>
+    <div class="zones-key">
+      <div class="zone-key-row"><div class="key-pin z3-A">A</div><div class="key-text"><strong>Top shelf.</strong> <span>General storage.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin z3-B">B</div><div class="key-text"><strong>Second shelf.</strong> <span>General storage.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin c-C">C</div><div class="key-text"><strong>Mid shelf.</strong> <span>Watches &amp; perfumes.</span></div></div>
+      <div class="zone-key-row"><div class="key-pin z3-D">D</div><div class="key-text"><strong>Lower racks.</strong> <span>Shoes, paired and upright.</span></div></div>
+    </div>
+    <div class="do-dont">
+      <div class="cell do"><div class="cell-label">— Do —</div><div class="cell-text">Return watches and perfumes to the mid shelf.</div></div>
+      <div class="cell dont"><div class="cell-label">— Don't —</div><div class="cell-text">Pile shoes on the floor.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="checklist">
+  <div class="checklist-title">— The Wardrobe is Ready When —</div>
+  <div class="checklist-row">
+    <div class="check"><span class="tick">✓</span><div class="check-label">Hung by size</div></div>
+    <div class="check"><span class="tick">✓</span><div class="check-label">Folded flat</div></div>
+    <div class="check"><span class="tick">✓</span><div class="check-label">Drawers closed</div></div>
+    <div class="check"><span class="tick">✓</span><div class="check-label">Shoes paired</div></div>
+  </div>
+</div>
+
+</body></html>
