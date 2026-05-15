@@ -19,4 +19,5 @@ This project was built entirely through pair programming. Below is the historica
 15. *"then push the project to github"*
 16. *"also can u remove the big blue line in the way please"*
 17. *"none of the manuals are mobile responsive btw make sure there responsive on mobile"*
+18. *"use swr for realoding"*
 
