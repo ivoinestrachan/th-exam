@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import useSWR from 'swr';
 import { User } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { PlusCircle, Trash2 } from 'lucide-react';
@@ -19,28 +20,32 @@ const STANDARD_TASKS = [
   'Evening Room Reset'
 ];
 
+const fetchAssignments = async () => {
+  const { data, error } = await supabase
+    .from('assignments')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+};
+
 export default function Assigner({ users }: { users: User[] }) {
-  const [assignments, setAssignments] = useState<any[]>([]);
   const [selectedUser, setSelectedUser] = useState(users[0]?.id || '');
   const [selectedTask, setSelectedTask] = useState(STANDARD_TASKS[0]);
-  const [loading, setLoading] = useState(true);
 
-  const fetchAssignments = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('assignments')
-      .select('*')
-      .order('created_at', { ascending: false });
-      
-    if (!error && data) {
-      setAssignments(data);
+  // SWR with automatic revalidation
+  const { data: assignments = [], error, isLoading, mutate } = useSWR(
+    'assignments',
+    fetchAssignments,
+    {
+      refreshInterval: 3000, // Auto-refresh every 3 seconds
+      revalidateOnFocus: true, // Refresh when window regains focus
+      revalidateOnReconnect: true, // Refresh on network reconnection
     }
-    setLoading(false);
-  };
+  );
 
-  useEffect(() => {
-    fetchAssignments();
-  }, []);
+  const loading = isLoading;
 
   const handleAssign = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +59,8 @@ export default function Assigner({ users }: { users: User[] }) {
     ]);
 
     if (!error) {
-      fetchAssignments();
+      // Trigger immediate revalidation
+      mutate();
     } else {
       console.error(error);
       alert('Make sure you ran the SQL schema in Supabase!');
@@ -63,7 +69,8 @@ export default function Assigner({ users }: { users: User[] }) {
 
   const handleDelete = async (id: string) => {
     await supabase.from('assignments').delete().eq('id', id);
-    fetchAssignments();
+    // Trigger immediate revalidation
+    mutate();
   };
 
   const getUserName = (id: string) => {
