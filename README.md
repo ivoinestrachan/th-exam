@@ -17,3 +17,7 @@ This project was built entirely through pair programming. Below is the historica
 13. *"this can be way more organize"*
 14. *"then after this is done all the prompts i prompted you can put into a markdown version in readme file or whichever you think is best"*
 15. *"then push the project to github"*
+16. *"also can u remove the big blue line in the way please"*
+17. *"none of the manuals are mobile responsive btw make sure there responsive on mobile"*
+18. *"also add the remaing prompts in the readme"*
+19. *"also deployment failed 12:29:11.202 Running build in Washington, D.C., USA (East) – iad1..."*

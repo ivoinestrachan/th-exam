@@ -39,6 +39,22 @@ export default async function ManualDetailPage(props: { params: Promise<{ slug: 
     .replace(/height:\s*297mm;?/gi, 'min-height: 100vh; height: auto;')
     .replace(/overflow:\s*hidden;?/gi, '');
 
+  // 4. Force mobile responsiveness for hardcoded grids and huge padding/fonts
+  styles += `
+    @media (max-width: 640px) {
+      .manual-content-wrapper { padding: 6% !important; }
+      .manual-content-wrapper .zones { grid-template-columns: 1fr !important; }
+      .manual-content-wrapper .flow { flex-wrap: wrap !important; justify-content: center !important; gap: 1rem !important; }
+      .manual-content-wrapper .flow-arrow { display: none !important; }
+      .manual-content-wrapper .checks { flex-wrap: wrap !important; gap: 1rem !important; }
+      .manual-content-wrapper h1 { font-size: 2.8rem !important; line-height: 1.1 !important; }
+      .manual-content-wrapper .zone-letter { font-size: 2rem !important; }
+      .manual-content-wrapper .golden { flex-direction: column !important; gap: 1rem !important; text-align: left !important; }
+      .manual-content-wrapper .golden-icon { font-size: 2rem !important; align-self: flex-start !important; }
+      .manual-content-wrapper .index-row { flex-direction: column !important; align-items: flex-start !important; gap: 0.5rem !important; padding-bottom: 1rem !important; }
+    }
+  `;
+
   return (
     <main className="min-h-screen pb-24 px-4 max-w-4xl mx-auto">
       <Navbar />
